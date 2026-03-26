@@ -45,7 +45,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background p-4">
-      <div className="w-full max-w-sm rounded-lg border border-border bg-card p-6 card-shadow">
+      <div className="w-full min-w-0 max-w-sm rounded-lg border border-border bg-card p-6 card-shadow">
         <h1 className="page-title mb-1">Вход</h1>
         <p className="mb-6 text-sm text-muted-foreground">FinTrack</p>
         <form onSubmit={handleSubmit} className="space-y-4">

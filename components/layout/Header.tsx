@@ -12,7 +12,7 @@ type HeaderProps = {
 
 export function Header({ title, onAddClick, onMenuClick }: HeaderProps) {
   return (
-    <header className="flex h-[52px] shrink-0 items-center gap-2 border-b border-border bg-card px-3 sm:px-4">
+    <header className="flex h-[52px] min-w-0 max-w-full shrink-0 items-center gap-2 border-b border-border bg-card px-3 sm:px-4">
       {onMenuClick ? (
         <Button
           type="button"

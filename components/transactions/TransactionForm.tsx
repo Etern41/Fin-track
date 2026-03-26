@@ -21,7 +21,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { cn } from "@/lib/utils";
 import {
   EXPENSE_CATEGORIES,
   INCOME_CATEGORIES,
@@ -174,14 +173,17 @@ export function TransactionForm({
             {mode === "create" ? "Новая транзакция" : "Редактирование"}
           </DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form
+          onSubmit={handleSubmit}
+          className="min-w-0 max-w-full space-y-4"
+        >
           <div className="space-y-2">
             <Label>Тип</Label>
-            <div className="flex gap-2">
+            <div className="flex min-w-0 gap-2">
               <Button
                 type="button"
                 variant={type === "INCOME" ? "default" : "outline"}
-                className={cn("flex-1")}
+                className="min-w-0 shrink flex-1"
                 onClick={() => setType("INCOME")}
               >
                 Доход
@@ -189,7 +191,7 @@ export function TransactionForm({
               <Button
                 type="button"
                 variant={type === "EXPENSE" ? "default" : "outline"}
-                className={cn("flex-1")}
+                className="min-w-0 shrink flex-1"
                 onClick={() => setType("EXPENSE")}
               >
                 Расход
@@ -208,7 +210,7 @@ export function TransactionForm({
               required
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="h-9"
+              className="h-9 w-full min-w-0 max-w-full"
             />
           </div>
 
@@ -236,7 +238,7 @@ export function TransactionForm({
               required
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="h-9"
+              className="h-9 w-full min-w-0 max-w-full"
             />
           </div>
 

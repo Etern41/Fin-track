@@ -94,9 +94,29 @@
     border-color: hsl(var(--border));
   }
 
+  html {
+    overflow-x: hidden;
+  }
+
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply overflow-x-hidden bg-background text-foreground antialiased;
     font-size: 14px;
+  }
+
+  /* Нативные поля даты/времени имеют большую min-width и ломают сетку на узких экранах */
+  input[type="date"],
+  input[type="time"],
+  input[type="datetime-local"],
+  input[type="month"] {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  input[type="number"] {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 }
 

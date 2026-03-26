@@ -77,7 +77,7 @@ export default async function DashboardPage() {
   const balance = totalIncome - totalExpense;
 
   return (
-    <div className="space-y-8">
+    <div className="min-w-0 max-w-full space-y-8">
       <StatCards
         balance={balance}
         totalIncome={totalIncome}

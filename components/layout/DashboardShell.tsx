@@ -24,7 +24,7 @@ export function DashboardShell({
   }, [pathname]);
 
   return (
-    <div className="flex min-h-screen min-h-[100dvh] bg-background">
+    <div className="flex min-h-screen min-h-[100dvh] min-w-0 max-w-full bg-background">
       <Sidebar />
       {mobileNavOpen ? (
         <>
@@ -50,8 +50,8 @@ export function DashboardShell({
           onAddClick={onAddClick}
           onMenuClick={() => setMobileNavOpen(true)}
         />
-        <main className="flex-1 overflow-x-hidden overflow-y-auto p-3 sm:p-4">
-          {children}
+        <main className="min-w-0 flex-1 overflow-x-hidden overflow-y-auto p-3 sm:p-4">
+          <div className="min-w-0 max-w-full">{children}</div>
         </main>
       </div>
     </div>

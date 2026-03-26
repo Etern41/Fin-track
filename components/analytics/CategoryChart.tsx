@@ -26,7 +26,7 @@ export function CategoryChart({ data }: Props) {
   return (
     <div className="rounded-lg border border-border bg-card p-3 sm:p-4 card-shadow">
       <p className="section-label mb-3">Расходы по категориям</p>
-      <div className="h-[min(360px,70vw)] w-full min-w-0 sm:h-[320px]">
+      <div className="h-[min(360px,70vw)] w-full min-w-0 overflow-hidden sm:h-[320px]">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie

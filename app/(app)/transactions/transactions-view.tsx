@@ -172,7 +172,7 @@ export function TransactionsView() {
   const endIdx = total === 0 ? 0 : Math.min(page * 50, total);
 
   return (
-    <div className="space-y-4">
+    <div className="min-w-0 max-w-full space-y-4">
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
         <Button variant="outline" size="sm" className="w-full sm:w-auto" asChild>
           <a href={exportHref} download>

@@ -21,7 +21,7 @@ export function IncomeExpenseBarChart({ data }: Props) {
   return (
     <div className="rounded-lg border border-border bg-card p-3 sm:p-4 card-shadow">
       <p className="section-label mb-3">Доходы и расходы по месяцам</p>
-      <div className="h-[240px] w-full min-w-0 sm:h-[300px] md:h-[320px]">
+      <div className="h-[240px] w-full min-w-0 overflow-hidden sm:h-[300px] md:h-[320px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={data}

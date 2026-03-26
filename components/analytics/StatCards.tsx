@@ -23,7 +23,7 @@ export function StatCards({
   return (
     <div
       className={cn(
-        "grid gap-4 sm:grid-cols-2 lg:grid-cols-4",
+        "grid min-w-0 max-w-full gap-4 sm:grid-cols-2 lg:grid-cols-4",
         className
       )}
     >

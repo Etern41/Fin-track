@@ -35,8 +35,8 @@ export function FiltersBar({ values, onChange }: Props) {
   }
 
   return (
-    <div className="mb-4 flex flex-col gap-3 rounded-lg border border-border bg-card p-3 sm:p-4 card-shadow">
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:flex lg:flex-wrap lg:items-end">
+    <div className="mb-4 flex min-w-0 max-w-full flex-col gap-3 rounded-lg border border-border bg-card p-3 sm:p-4 card-shadow">
+      <div className="grid min-w-0 grid-cols-1 gap-3 md:grid-cols-2 lg:flex lg:flex-wrap lg:items-end">
         <div className="min-w-0 space-y-1">
           <Label htmlFor="f-from" className="text-xs">
             С:
@@ -44,7 +44,7 @@ export function FiltersBar({ values, onChange }: Props) {
           <Input
             id="f-from"
             type="date"
-            className="h-9 w-full min-w-0 sm:max-w-[200px]"
+            className="h-9 w-full min-w-0 max-w-full"
             value={values.from}
             onChange={(e) => patch({ from: e.target.value })}
           />
@@ -56,12 +56,12 @@ export function FiltersBar({ values, onChange }: Props) {
           <Input
             id="f-to"
             type="date"
-            className="h-9 w-full min-w-0 sm:max-w-[200px]"
+            className="h-9 w-full min-w-0 max-w-full"
             value={values.to}
             onChange={(e) => patch({ to: e.target.value })}
           />
         </div>
-        <div className="min-w-0 space-y-1 lg:min-w-[200px]">
+        <div className="min-w-0 space-y-1 md:max-lg:col-span-2 lg:max-w-xs">
           <Label className="text-xs">Категория</Label>
           <Select
             value={values.category || "__all__"}
@@ -82,9 +82,9 @@ export function FiltersBar({ values, onChange }: Props) {
             </SelectContent>
           </Select>
         </div>
-        <div className="min-w-0 space-y-1 lg:flex-1">
+        <div className="min-w-0 space-y-1 md:max-lg:col-span-2 lg:flex-1">
           <Label className="text-xs">Тип</Label>
-          <div className="grid w-full grid-cols-3 gap-0.5 rounded-md border border-border p-0.5 sm:inline-flex sm:w-auto sm:gap-0">
+          <div className="grid w-full min-w-0 grid-cols-3 gap-0.5 rounded-md border border-border p-0.5 sm:inline-flex sm:w-auto sm:gap-0">
             {(
               [
                 ["ALL", "Все"],
@@ -98,7 +98,7 @@ export function FiltersBar({ values, onChange }: Props) {
                 variant="ghost"
                 size="sm"
                 className={cn(
-                  "h-8 px-1.5 text-xs sm:px-3 sm:text-sm",
+                  "h-auto min-h-8 min-w-0 whitespace-normal px-1 py-2 text-center text-xs leading-tight sm:h-8 sm:whitespace-nowrap sm:px-3 sm:py-0 sm:text-sm",
                   values.type === key && "bg-muted font-medium"
                 )}
                 onClick={() => patch({ type: key })}
