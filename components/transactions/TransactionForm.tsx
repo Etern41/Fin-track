@@ -27,6 +27,10 @@ import {
   INCOME_CATEGORIES,
 } from "@/lib/categories";
 import type { TransactionRowData } from "@/types/transaction";
+import {
+  MAX_TRANSACTION_AMOUNT,
+  MAX_TRANSACTION_DESCRIPTION_LENGTH,
+} from "@/lib/validation";
 
 type Mode = "create" | "edit";
 
@@ -102,6 +106,16 @@ export function TransactionForm({
     const num = Number(amount.replace(",", "."));
     if (!Number.isFinite(num) || num < 0.01) {
       setError("Введите сумму не меньше 0,01");
+      return;
+    }
+    if (num > MAX_TRANSACTION_AMOUNT) {
+      setError("Сумма превышает допустимый максимум");
+      return;
+    }
+    if (description.length > MAX_TRANSACTION_DESCRIPTION_LENGTH) {
+      setError(
+        `Описание не длиннее ${MAX_TRANSACTION_DESCRIPTION_LENGTH} символов`
+      );
       return;
     }
     if (!category) {
@@ -189,6 +203,7 @@ export function TransactionForm({
               id="tx-amount"
               type="number"
               min={0.01}
+              max={MAX_TRANSACTION_AMOUNT}
               step={0.01}
               required
               value={amount}
@@ -229,14 +244,14 @@ export function TransactionForm({
             <Label htmlFor="tx-desc">Описание</Label>
             <Textarea
               id="tx-desc"
-              maxLength={200}
+              maxLength={MAX_TRANSACTION_DESCRIPTION_LENGTH}
               rows={3}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Необязательно"
             />
             <p className="text-xs text-muted-foreground">
-              {description.length}/200
+              {description.length}/{MAX_TRANSACTION_DESCRIPTION_LENGTH}
             </p>
           </div>
 

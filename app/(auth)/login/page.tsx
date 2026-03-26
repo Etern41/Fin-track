@@ -8,6 +8,10 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  MAX_EMAIL_LENGTH,
+  MAX_PASSWORD_LENGTH,
+} from "@/lib/validation";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -52,6 +56,7 @@ export default function LoginPage() {
               type="email"
               autoComplete="email"
               required
+              maxLength={MAX_EMAIL_LENGTH}
               className="h-9"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -64,6 +69,7 @@ export default function LoginPage() {
               type="password"
               autoComplete="current-password"
               required
+              maxLength={MAX_PASSWORD_LENGTH}
               className="h-9"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

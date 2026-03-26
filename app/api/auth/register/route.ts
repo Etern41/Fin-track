@@ -1,6 +1,12 @@
 import { NextResponse } from "next/server";
 import { hash } from "bcryptjs";
 import { prisma } from "@/lib/prisma";
+import {
+  MAX_EMAIL_LENGTH,
+  MAX_PASSWORD_LENGTH,
+  MAX_USER_NAME_LENGTH,
+  MIN_PASSWORD_LENGTH,
+} from "@/lib/validation";
 
 export async function POST(request: Request) {
   let body: unknown;
@@ -32,18 +38,39 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Некорректный email" }, { status: 400 });
   }
 
-  if (typeof password !== "string" || password.length < 8) {
+  const emailTrimmed = email.trim();
+  if (emailTrimmed.length > MAX_EMAIL_LENGTH) {
+    return NextResponse.json({ error: "Email слишком длинный" }, { status: 400 });
+  }
+
+  if (typeof password !== "string" || password.length < MIN_PASSWORD_LENGTH) {
     return NextResponse.json(
-      { error: "Пароль должен быть не короче 8 символов" },
+      { error: `Пароль должен быть не короче ${MIN_PASSWORD_LENGTH} символов` },
       { status: 400 }
     );
   }
 
-  const nameStr =
-    typeof name === "string" && name.trim() ? name.trim() : undefined;
+  if (password.length > MAX_PASSWORD_LENGTH) {
+    return NextResponse.json(
+      { error: "Пароль слишком длинный" },
+      { status: 400 }
+    );
+  }
+
+  let nameStr: string | undefined;
+  if (typeof name === "string" && name.trim()) {
+    const n = name.trim();
+    if (n.length > MAX_USER_NAME_LENGTH) {
+      return NextResponse.json(
+        { error: `Имя не длиннее ${MAX_USER_NAME_LENGTH} символов` },
+        { status: 400 }
+      );
+    }
+    nameStr = n;
+  }
 
   const existing = await prisma.user.findUnique({
-    where: { email: email.trim().toLowerCase() },
+    where: { email: emailTrimmed.toLowerCase() },
   });
   if (existing) {
     return NextResponse.json(
@@ -56,7 +83,7 @@ export async function POST(request: Request) {
 
   await prisma.user.create({
     data: {
-      email: email.trim().toLowerCase(),
+      email: emailTrimmed.toLowerCase(),
       passwordHash,
       name: nameStr,
     },

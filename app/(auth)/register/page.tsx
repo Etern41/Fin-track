@@ -8,6 +8,11 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  MAX_EMAIL_LENGTH,
+  MAX_PASSWORD_LENGTH,
+  MAX_USER_NAME_LENGTH,
+} from "@/lib/validation";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -74,6 +79,7 @@ export default function RegisterPage() {
               id="reg-name"
               type="text"
               autoComplete="name"
+              maxLength={MAX_USER_NAME_LENGTH}
               className="h-9"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -87,6 +93,7 @@ export default function RegisterPage() {
               type="email"
               autoComplete="email"
               required
+              maxLength={MAX_EMAIL_LENGTH}
               className="h-9"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -100,6 +107,7 @@ export default function RegisterPage() {
               autoComplete="new-password"
               required
               minLength={8}
+              maxLength={MAX_PASSWORD_LENGTH}
               className="h-9"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

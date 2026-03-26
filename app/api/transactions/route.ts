@@ -2,6 +2,11 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireUserId } from "@/lib/api-auth";
 import { isValidCategoryForType } from "@/lib/categories";
+import {
+  MAX_CATEGORY_INPUT_LENGTH,
+  MAX_TRANSACTION_AMOUNT,
+  MAX_TRANSACTION_DESCRIPTION_LENGTH,
+} from "@/lib/validation";
 import type { Prisma, TxType } from "@prisma/client";
 
 const DEFAULT_LIMIT = 50;
@@ -93,8 +98,22 @@ export async function POST(request: Request) {
         : NaN;
   const category =
     typeof body.category === "string" ? body.category.trim() : "";
+
+  if (typeof body.description === "string") {
+    if (body.description.length > MAX_TRANSACTION_DESCRIPTION_LENGTH) {
+      return NextResponse.json(
+        {
+          error: `Описание не длиннее ${MAX_TRANSACTION_DESCRIPTION_LENGTH} символов`,
+        },
+        { status: 400 }
+      );
+    }
+  }
+
   const description =
-    typeof body.description === "string" ? body.description.slice(0, 200) : null;
+    typeof body.description === "string"
+      ? body.description.trim() || null
+      : null;
   const dateStr = typeof body.date === "string" ? body.date : "";
 
   if (!type) {
@@ -105,6 +124,15 @@ export async function POST(request: Request) {
       { error: "Сумма должна быть больше нуля" },
       { status: 400 }
     );
+  }
+  if (amount > MAX_TRANSACTION_AMOUNT) {
+    return NextResponse.json(
+      { error: "Сумма превышает допустимый максимум для одной операции" },
+      { status: 400 }
+    );
+  }
+  if (category.length > MAX_CATEGORY_INPUT_LENGTH) {
+    return NextResponse.json({ error: "Недопустимая категория" }, { status: 400 });
   }
   if (!isValidCategoryForType(category, type)) {
     return NextResponse.json({ error: "Недопустимая категория" }, { status: 400 });

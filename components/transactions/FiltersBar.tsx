@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ALL_CATEGORIES } from "@/lib/categories";
+import { MAX_SEARCH_QUERY_LENGTH } from "@/lib/validation";
 
 export type FilterType = "ALL" | "INCOME" | "EXPENSE";
 
@@ -116,6 +117,7 @@ export function FiltersBar({ values, onChange }: Props) {
           id="f-search"
           type="search"
           placeholder="Текст…"
+          maxLength={MAX_SEARCH_QUERY_LENGTH}
           className="h-9"
           value={values.search}
           onChange={(e) => patch({ search: e.target.value })}
