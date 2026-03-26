@@ -168,7 +168,7 @@ export function TransactionForm({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="max-h-[min(90dvh,calc(100vh-2rem))] overflow-y-auto sm:max-w-md">
         <DialogHeader>
           <DialogTitle>
             {mode === "create" ? "Новая транзакция" : "Редактирование"}

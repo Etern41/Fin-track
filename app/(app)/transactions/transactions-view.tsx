@@ -173,8 +173,8 @@ export function TransactionsView() {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-center justify-end gap-2">
-        <Button variant="outline" size="sm" asChild>
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
+        <Button variant="outline" size="sm" className="w-full sm:w-auto" asChild>
           <a href={exportHref} download>
             <Download className="mr-2 size-4" />
             Экспорт CSV

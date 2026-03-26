@@ -159,7 +159,7 @@ export function AnalyticsView() {
     <div className="space-y-6">
       <div className="flex flex-col gap-3">
         <p className="section-label">Период</p>
-        <div className="flex flex-wrap gap-2">
+        <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap">
           {(
             [
               ["month", "Текущий месяц"],
@@ -174,6 +174,7 @@ export function AnalyticsView() {
               type="button"
               size="sm"
               variant={preset === key ? "default" : "outline"}
+              className="h-auto min-h-9 w-full justify-center px-2 py-2 text-xs leading-tight sm:w-auto sm:px-3 sm:text-sm"
               onClick={() => {
                 if (key === "custom") {
                   const now = new Date();
@@ -188,23 +189,23 @@ export function AnalyticsView() {
           ))}
         </div>
         {preset === "custom" ? (
-          <div className="flex flex-wrap items-end gap-3">
-            <div className="space-y-1">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:flex sm:flex-wrap sm:items-end">
+            <div className="min-w-0 space-y-1">
               <Label htmlFor="a-from">С</Label>
               <Input
                 id="a-from"
                 type="date"
-                className="h-9 w-[160px]"
+                className="h-9 w-full min-w-0 sm:max-w-[200px]"
                 value={customFrom}
                 onChange={(e) => setCustomFrom(e.target.value)}
               />
             </div>
-            <div className="space-y-1">
+            <div className="min-w-0 space-y-1">
               <Label htmlFor="a-to">По</Label>
               <Input
                 id="a-to"
                 type="date"
-                className="h-9 w-[160px]"
+                className="h-9 w-full min-w-0 sm:max-w-[200px]"
                 value={customTo}
                 onChange={(e) => setCustomTo(e.target.value)}
               />

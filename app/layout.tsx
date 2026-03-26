@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
@@ -15,6 +15,12 @@ export const metadata: Metadata = {
   description: "Персональный финансовый трекер",
 };
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -25,7 +31,7 @@ export default function RootLayout({
       <body className={cn(inter.variable, "font-sans antialiased")}>
         <Providers>
           {children}
-          <Toaster position="bottom-right" richColors closeButton />
+          <Toaster position="bottom-center" richColors closeButton />
         </Providers>
       </body>
     </html>

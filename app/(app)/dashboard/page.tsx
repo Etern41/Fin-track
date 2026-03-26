@@ -86,11 +86,11 @@ export default async function DashboardPage() {
       />
 
       <section>
-        <div className="mb-3 flex items-center justify-between">
-          <h2 className="page-title">Последние транзакции</h2>
+        <div className="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <h2 className="page-title text-lg sm:text-xl">Последние транзакции</h2>
           <Link
             href="/transactions"
-            className="text-sm font-medium text-primary hover:underline"
+            className="shrink-0 text-sm font-medium text-primary hover:underline"
           >
             Все транзакции →
           </Link>
@@ -107,40 +107,77 @@ export default async function DashboardPage() {
             </p>
           </div>
         ) : (
-          <div className="overflow-x-auto rounded-lg border border-border bg-card card-shadow">
-            <table className="w-full min-w-[480px] border-collapse text-left">
-              <thead>
-                <tr className="border-b border-border bg-muted/40">
-                  <th className="section-label px-3 py-2">Дата</th>
-                  <th className="section-label px-3 py-2">Описание</th>
-                  <th className="section-label px-3 py-2">Категория</th>
-                  <th className="section-label px-3 py-2 text-right">Сумма</th>
-                </tr>
-              </thead>
-              <tbody>
-                {recent.map((t) => (
-                  <tr key={t.id} className="border-b border-border">
-                    <td className="px-3 py-2 text-sm text-muted-foreground">
-                      {relativeTime(t.date)}
-                    </td>
-                    <td className="px-3 py-2 text-sm text-foreground">
-                      {t.description ?? "—"}
-                    </td>
-                    <td className="px-3 py-2 text-sm text-foreground">
-                      {t.category}
-                    </td>
-                    <td
-                      className={`px-3 py-2 text-right text-base font-semibold ${
-                        t.type === "INCOME" ? "amount-income" : "amount-expense"
+          <>
+            <div className="flex flex-col gap-3 md:hidden">
+              {recent.map((t) => (
+                <div
+                  key={t.id}
+                  className="rounded-lg border border-border bg-card p-3 card-shadow"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="min-w-0 flex-1 space-y-1">
+                      <p className="text-xs text-muted-foreground">
+                        {relativeTime(t.date)}
+                      </p>
+                      <p className="break-words text-sm text-foreground">
+                        {t.description ?? "—"}
+                      </p>
+                      <p className="text-sm font-medium text-foreground">
+                        {t.category}
+                      </p>
+                    </div>
+                    <p
+                      className={`shrink-0 text-base font-semibold tabular-nums ${
+                        t.type === "INCOME"
+                          ? "amount-income"
+                          : "amount-expense"
                       }`}
                     >
                       {formatAmount(t.amount, t.type)}
-                    </td>
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="hidden overflow-x-auto rounded-lg border border-border bg-card md:block card-shadow">
+              <table className="w-full min-w-[480px] border-collapse text-left">
+                <thead>
+                  <tr className="border-b border-border bg-muted/40">
+                    <th className="section-label px-3 py-2">Дата</th>
+                    <th className="section-label px-3 py-2">Описание</th>
+                    <th className="section-label px-3 py-2">Категория</th>
+                    <th className="section-label px-3 py-2 text-right">
+                      Сумма
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {recent.map((t) => (
+                    <tr key={t.id} className="border-b border-border">
+                      <td className="px-3 py-2 text-sm text-muted-foreground">
+                        {relativeTime(t.date)}
+                      </td>
+                      <td className="px-3 py-2 text-sm text-foreground">
+                        {t.description ?? "—"}
+                      </td>
+                      <td className="px-3 py-2 text-sm text-foreground">
+                        {t.category}
+                      </td>
+                      <td
+                        className={`px-3 py-2 text-right text-base font-semibold tabular-nums ${
+                          t.type === "INCOME"
+                            ? "amount-income"
+                            : "amount-expense"
+                        }`}
+                      >
+                        {formatAmount(t.amount, t.type)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </section>
     </div>
