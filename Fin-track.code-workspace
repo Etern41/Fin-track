@@ -1,0 +1,19 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "name": "Fin-track"
+    }
+  ],
+  "settings": {
+    "git.openRepositoryInParentFolders": "always",
+    "files.watcherExclude": {
+      "**/fintrack/.next/**": true,
+      "**/fintrack/node_modules/**": true
+    },
+    "search.exclude": {
+      "**/fintrack/.next": true,
+      "**/fintrack/node_modules": true
+    }
+  }
+}
