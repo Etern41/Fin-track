@@ -25,7 +25,15 @@ export function IncomeExpenseBarChart({ data }: Props) {
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
-            <XAxis dataKey="label" tick={{ fontSize: 12 }} stroke="hsl(var(--muted-foreground))" />
+            <XAxis
+              dataKey="label"
+              tick={{ fontSize: 12 }}
+              stroke="hsl(var(--muted-foreground))"
+              interval={data.length > 8 ? "preserveStartEnd" : 0}
+              angle={data.length > 12 ? -35 : 0}
+              textAnchor={data.length > 12 ? "end" : "middle"}
+              height={data.length > 12 ? 56 : undefined}
+            />
             <YAxis
               tick={{ fontSize: 12 }}
               stroke="hsl(var(--muted-foreground))"

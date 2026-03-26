@@ -21,7 +21,7 @@ export function Header({ title, onAddClick }: HeaderProps) {
           onClick={onAddClick}
         >
           <Plus className="mr-1 size-4" />
-          + Добавить
+          Добавить
         </Button>
       </div>
     </header>

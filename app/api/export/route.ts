@@ -43,8 +43,10 @@ export async function GET(request: Request) {
   });
 
   const csvString = transactionsToCsv(transactions);
+  // UTF-8 BOM: иначе Excel на Windows открывает файл как ANSI и ломает кириллицу.
+  const csvWithBom = `\uFEFF${csvString}`;
 
-  return new Response(csvString, {
+  return new Response(csvWithBom, {
     headers: {
       "Content-Type": "text/csv; charset=utf-8",
       "Content-Disposition": 'attachment; filename="fintrack-export.csv"',

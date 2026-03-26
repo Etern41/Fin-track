@@ -9,6 +9,22 @@ function monthKey(d: Date): string {
   return `${y}-${m}`;
 }
 
+/** Все месяцы от календарного начала `from` до календарного `to` включительно. */
+function enumerateMonthKeysInRange(from: Date, to: Date): string[] {
+  const start = new Date(from.getFullYear(), from.getMonth(), 1);
+  const end = new Date(to.getFullYear(), to.getMonth(), 1);
+  if (start > end) {
+    return [monthKey(from)];
+  }
+  const keys: string[] = [];
+  const cur = new Date(start);
+  while (cur <= end) {
+    keys.push(monthKey(cur));
+    cur.setMonth(cur.getMonth() + 1);
+  }
+  return keys;
+}
+
 function startOfMonth(d: Date): Date {
   return new Date(d.getFullYear(), d.getMonth(), 1, 0, 0, 0, 0);
 }
@@ -89,13 +105,15 @@ export async function GET(request: Request) {
     };
   });
 
-  const byMonth = Array.from(monthMap.entries())
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([month, v]) => ({
+  const monthKeys = enumerateMonthKeysInRange(from, to);
+  const byMonth = monthKeys.map((month) => {
+    const v = monthMap.get(month) ?? { income: 0, expense: 0 };
+    return {
       month,
       income: v.income,
       expense: v.expense,
-    }));
+    };
+  });
 
   return NextResponse.json({
     balance,

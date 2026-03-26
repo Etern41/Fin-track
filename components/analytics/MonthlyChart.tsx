@@ -32,16 +32,19 @@ const monthRu: Record<string, string> = {
   "12": "дек",
 };
 
-function formatMonthLabel(key: string): string {
+function formatMonthLabel(key: string, useFullYear: boolean): string {
   const [y, m] = key.split("-");
   const short = monthRu[m ?? ""] ?? m;
-  return `${short} ${y?.slice(2) ?? ""}`.trim();
+  const yearPart = useFullYear ? y : y?.slice(2) ?? "";
+  return `${short} ${yearPart}`.trim();
 }
 
 export function MonthlyChart({ data }: Props) {
+  const years = new Set(data.map((d) => d.month.split("-")[0]));
+  const useFullYear = years.size > 1;
   const chartData = data.map((d) => ({
     ...d,
-    label: formatMonthLabel(d.month),
+    label: formatMonthLabel(d.month, useFullYear),
   }));
 
   return (
@@ -51,7 +54,15 @@ export function MonthlyChart({ data }: Props) {
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
             <CartesianGrid strokeDasharray="3 3" className="stroke-border" />
-            <XAxis dataKey="label" tick={{ fontSize: 12 }} stroke="hsl(var(--muted-foreground))" />
+            <XAxis
+              dataKey="label"
+              tick={{ fontSize: 12 }}
+              stroke="hsl(var(--muted-foreground))"
+              interval={chartData.length > 8 ? "preserveStartEnd" : 0}
+              angle={chartData.length > 12 ? -35 : 0}
+              textAnchor={chartData.length > 12 ? "end" : "middle"}
+              height={chartData.length > 12 ? 56 : undefined}
+            />
             <YAxis
               tick={{ fontSize: 12 }}
               stroke="hsl(var(--muted-foreground))"

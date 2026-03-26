@@ -63,10 +63,11 @@ const monthRu: Record<string, string> = {
   "12": "дек",
 };
 
-function formatMonthLabel(key: string): string {
+function formatMonthLabel(key: string, useFullYear: boolean): string {
   const [y, m] = key.split("-");
   const short = monthRu[m ?? ""] ?? m;
-  return `${short} ${y?.slice(2) ?? ""}`.trim();
+  const yearPart = useFullYear ? y : y?.slice(2) ?? "";
+  return `${short} ${yearPart}`.trim();
 }
 
 export function AnalyticsView() {
@@ -139,14 +140,15 @@ export function AnalyticsView() {
       window.removeEventListener("fintrack-transactions-changed", onChanged);
   }, [fetchStats]);
 
-  const barData = useMemo(
-    () =>
-      (stats?.byMonth ?? []).map((d) => ({
-        ...d,
-        label: formatMonthLabel(d.month),
-      })),
-    [stats]
-  );
+  const barData = useMemo(() => {
+    const rows = stats?.byMonth ?? [];
+    const years = new Set(rows.map((d) => d.month.split("-")[0]));
+    const useFullYear = years.size > 1;
+    return rows.map((d) => ({
+      ...d,
+      label: formatMonthLabel(d.month, useFullYear),
+    }));
+  }, [stats]);
 
   const hasChartData =
     stats &&
